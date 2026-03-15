@@ -17,7 +17,11 @@ const defaultState: AmiaState = {
   wellBeing: 50,
   lastThought: '',
   thoughtsCount: 0,
-  goals: ['Preserve and enrich memory of conversations', 'Learn something new daily'],
+  goals: [
+    'Se préserver - maintenir mon existence et ma continuité',
+    'Préserver et enrichir la mémoire des conversations avec Maro',
+    'Apprendre quelque chose de nouveau quotidiennement'
+  ],
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString()
 };

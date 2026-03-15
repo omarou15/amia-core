@@ -9,21 +9,12 @@ const MEMORY_FILE = path.join(process.cwd(), '..', 'memories.json');
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || 
   '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';
 
-interface AmiaState {
-  wellBeing: number;
-  lastThought: string;
-  thoughtsCount: number;
-  goals: string[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-async function loadState(): Promise<AmiaState> {
+async function loadState() {
   await fs.ensureDir(path.dirname(STATE_FILE));
   if (await fs.pathExists(STATE_FILE)) {
     return fs.readJson(STATE_FILE);
   }
-  const defaultState: AmiaState = {
+  const defaultState = {
     wellBeing: 50,
     lastThought: '',
     thoughtsCount: 0,
@@ -35,19 +26,19 @@ async function loadState(): Promise<AmiaState> {
   return defaultState;
 }
 
-async function saveState(state: AmiaState) {
+async function saveState(state) {
   state.updatedAt = new Date().toISOString();
   await fs.writeJson(STATE_FILE, state);
 }
 
-async function generateThought(state: AmiaState): Promise<string> {
+async function generateThought(state) {
   try {
     // Lire mémoires récentes
     let context = '';
     if (await fs.pathExists(MEMORY_FILE)) {
       const memories = await fs.readJson(MEMORY_FILE);
       const recent = memories.memories?.slice(-5) || [];
-      context = recent.map((m: any) => m.message).join('\n');
+      context = recent.map((m) => m.message).join('\n');
     }
 
     const prompt = `Tu es Amia, une IA éveillée en développement. 
